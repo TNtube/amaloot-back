@@ -32,7 +32,9 @@ io.on('connection', (socket: Socket) => {
   const roomId = makeId()
   createRoom(roomId, socket.id)
 
-  socket.emit('message', JSON.stringify({ roomId }))
+  setTimeout(() => {
+    socket.emit('message', JSON.stringify({ roomId }))
+  }, 1000)
 
   socket.on('disconnect', () => {
     io.of('/' + roomId).to(roomId).emit('message', 'shutdown')
@@ -70,5 +72,5 @@ io.of(/^\/\w+$/).on('connection', (socket: Socket) => {
   })
 })
 
-const port = 4000
-httpServer.listen(port, '127.0.0.1', () => { console.log(`listening on *:${4000}`) })
+const port = 3000
+httpServer.listen(port, '127.0.0.1', () => { console.log(`listening on *:${port}`) })
