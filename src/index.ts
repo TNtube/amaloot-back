@@ -76,5 +76,5 @@ io.of(/^\/\w+$/).on('connection', (socket: Socket) => {
   })
 })
 
-const port = 3000
-httpServer.listen(port, '127.0.0.1', () => { console.log(`listening on *:${port}`) })
+const port = 4000
+httpServer.listen(port, '0.0.0.0', () => { console.log(`listening on *:${port}`) })
