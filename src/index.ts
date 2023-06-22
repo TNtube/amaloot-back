@@ -59,7 +59,7 @@ io.of(/^\/\w+$/).on('connection', (socket: Socket) => {
     return
   }
   console.log('Room found !')
-
+  owner.emit('client-connected')
   addMobile(namespace, socket.id)
   socket.join(namespace)
 
