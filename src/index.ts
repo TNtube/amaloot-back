@@ -63,6 +63,10 @@ io.of(/^\/\w+$/).on('connection', (socket: Socket) => {
   addMobile(namespace, socket.id)
   socket.join(namespace)
 
+  socket.on('map-data', obj => {
+    console.log(JSON.stringify(obj))
+  })
+
   socket.on('message', msg => {
     const obj = JSON.parse(msg)
     const ev = obj.event
