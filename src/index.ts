@@ -45,6 +45,14 @@ io.on('connection', (socket: Socket) => {
     io.of('/' + roomId).to(roomId).emit('message', msg)
     console.log(`forwarding message from [${socket.id}] to namespace [${roomId}]`)
   })
+
+  socket.on('rotate-module', data => {
+    console.log('rotate with ' + JSON.stringify(data))
+  })
+
+  socket.on('map-data', data => {
+    console.log('map data with ' + JSON.stringify(data))
+  })
 })
 
 io.of(/^\/\w+$/).on('connection', (socket: Socket) => {
@@ -63,10 +71,6 @@ io.of(/^\/\w+$/).on('connection', (socket: Socket) => {
   addMobile(namespace, socket.id)
   socket.join(namespace)
 
-  socket.on('map-data', obj => {
-    console.log(JSON.stringify(obj))
-  })
-
   socket.on('message', msg => {
     const obj = JSON.parse(msg)
     const ev = obj.event
@@ -81,4 +85,4 @@ io.of(/^\/\w+$/).on('connection', (socket: Socket) => {
 })
 
 const port = 4000
-httpServer.listen(port, '0.0.0.0', () => { console.log(`listening on *:${port}`) })
+httpServer.listen(port, 'localhost', () => { console.log(`listening on *:${port}`) })
