@@ -33,7 +33,7 @@ io.on('connection', (socket: Socket) => {
   createRoom(roomId, socket.id)
 
   setTimeout(() => {
-    socket.emit('message', JSON.stringify({ roomId }))
+    socket.emit('room-id', roomId)
   }, 1000)
 
   socket.on('disconnect', () => {
@@ -51,7 +51,8 @@ io.of(/^\/\w+$/).on('connection', (socket: Socket) => {
   const namespace = socket.nsp.name.substring(1)
   const room = roomData.get(namespace)
   console.log(socket.id, 'try to join', namespace)
-  if (!room) {
+  const owner = io.sockets.sockets.get(room?.pcPlayer ?? '')
+  if (!room || !owner) {
     socket.emit('404')
     console.log('404, room not found :', namespace)
     socket.disconnect()
@@ -63,7 +64,10 @@ io.of(/^\/\w+$/).on('connection', (socket: Socket) => {
   socket.join(namespace)
 
   socket.on('message', msg => {
-    io.sockets.sockets.get(room.pcPlayer)?.emit('message', msg)
+    const obj = JSON.parse(msg)
+    const ev = obj.event
+    delete obj.event
+    io.sockets.sockets.get(room.pcPlayer)?.emit(ev, obj)
     console.log(`forwarding message from [${socket.id}] to pcPlayer [${room.pcPlayer}]`)
   })
 
