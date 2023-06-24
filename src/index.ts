@@ -48,10 +48,27 @@ io.on('connection', (socket: Socket) => {
 
   socket.on('rotate-module', data => {
     console.log('rotate with ' + JSON.stringify(data))
+    io.of('/' + roomId).to(roomId).emit('rotate-module', data)
   })
 
   socket.on('map-data', data => {
     console.log('map data with ' + JSON.stringify(data))
+    io.of('/' + roomId).to(roomId).emit('map-data', data)
+  })
+
+  socket.on('game-over', data => {
+    console.log('game-over with ' + JSON.stringify(data))
+    io.of('/' + roomId).to(roomId).emit('map-data', data)
+  })
+
+  socket.on('game-over', data => {
+    console.log('game-over with ' + JSON.stringify(data))
+    io.of('/' + roomId).to(roomId).emit('game-over', data)
+  })
+
+  socket.on('lever-activate', data => {
+    console.log('lever-activate with ' + JSON.stringify(data))
+    io.of('/' + roomId).to(roomId).emit('lever-activate', data)
   })
 })
 
