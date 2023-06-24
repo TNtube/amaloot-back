@@ -2,7 +2,7 @@ import { createServer } from 'http'
 import { Server, Socket } from 'socket.io'
 
 function makeId () {
-  return Math.random().toString(36).slice(0, 6)
+  return Math.random().toString(36).slice(6).slice(0, 6)
 }
 
 const httpServer = createServer()
