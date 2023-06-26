@@ -97,10 +97,12 @@ io.of(/^\/\w+$/).on('connection', (socket: Socket) => {
   })
 
   socket.on('rotate-module', data => {
+    console.log('mobile send rotate module')
     io.sockets.sockets.get(room.pcPlayer)?.emit('rotate-module', data)
   })
 
-  socket.on('rotate-module', () => {
+  socket.on('malus', () => {
+    console.log('mobile send malus')
     io.sockets.sockets.get(room.pcPlayer)?.emit('malus')
   })
 
