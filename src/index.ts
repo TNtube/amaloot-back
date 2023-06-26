@@ -97,7 +97,7 @@ io.of(/^\/\w+$/).on('connection', (socket: Socket) => {
   })
 
   socket.on('rotate-module', data => {
-    console.log('mobile send rotate module')
+    console.log('mobile send rotate module with ' + JSON.stringify(data))
     io.sockets.sockets.get(room.pcPlayer)?.emit('rotate-module', data)
   })
 
