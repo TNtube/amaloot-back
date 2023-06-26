@@ -96,6 +96,14 @@ io.of(/^\/\w+$/).on('connection', (socket: Socket) => {
     console.log(`forwarding message from [${socket.id}] to pcPlayer [${room.pcPlayer}]`)
   })
 
+  socket.on('rotate-module', data => {
+    io.sockets.sockets.get(room.pcPlayer)?.emit('rotate-module', data)
+  })
+
+  socket.on('rotate-module', () => {
+    io.sockets.sockets.get(room.pcPlayer)?.emit('malus')
+  })
+
   socket.on('disconnect', () => {
     console.log(`mobilePlayer [${socket.id}] disconnected from namespace [${namespace}]`)
   })
